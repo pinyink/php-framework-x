@@ -1,5 +1,10 @@
 {
     "require": {
         "clue/framework-x": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "Acme\\Todo\\": "src/"
+        }
     }
 }
