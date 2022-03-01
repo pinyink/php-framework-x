@@ -8,8 +8,8 @@ class HelloController
 {
     public function __invoke()
     {
-        return Response::plaintext(
-            "Hello wörld!\n"
+        return Response::html(
+            "<h1>Hello World</h1>"
         );
     }
 }
