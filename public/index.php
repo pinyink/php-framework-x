@@ -9,7 +9,11 @@ $db = (new React\MySQL\Factory())->createLazyConnection($credentials);
 $app = new FrameworkX\App();
 
 $app->get('/', new Acme\Todo\HelloController());
-$app->get('/users/{name}', new Acme\Todo\UserController());
-$app->get('/user', new Acme\Todo\AsyncContentTypeMiddleware(), new Acme\Todo\AsyncUserController());
+$app->get('/user/{name}', new Acme\Todo\UserController());
+$app->get('/users', new Acme\Todo\AsyncContentTypeMiddleware(), new Acme\Todo\AsyncUserController());
+$app->get('/crud', function() {
+    $controller = new Acme\Todo\Controllers\CrudController();
+    return $controller->view();
+});
 
 $app->run();
