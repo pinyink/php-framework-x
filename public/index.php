@@ -11,9 +11,10 @@ $app = new FrameworkX\App();
 $app->get('/', new Acme\Todo\HelloController());
 $app->get('/user/{name}', new Acme\Todo\UserController());
 $app->get('/users', new Acme\Todo\AsyncContentTypeMiddleware(), new Acme\Todo\AsyncUserController());
-$app->get('/crud', function() {
-    $controller = new Acme\Todo\Controllers\CrudController();
-    return $controller->view();
-});
+// $app->get('/crud', function() {
+//     $controller = new Acme\Todo\Controllers\CrudController();
+//     return $controller->view();
+// });
+$app->get('/crud', new Acme\Todo\Controllers\CrudController());
 
 $app->run();
