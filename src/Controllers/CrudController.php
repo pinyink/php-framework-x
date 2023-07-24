@@ -13,6 +13,5 @@ class CrudController
         $response = $tema->render('first.html.twig', ['name' => 'John Doe', 
         'occupation' => 'gardener']);
         return Response::html($response);
-        
     }
 }
