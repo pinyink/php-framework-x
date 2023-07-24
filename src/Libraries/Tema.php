@@ -5,7 +5,7 @@ class Tema {
     
     public function render($path, $data = [])
     {
-        $loader = new \Twig\Loader\FilesystemLoader('../src/Views/Tema');
+        $loader = new \Twig\Loader\FilesystemLoader('../src/Views');
         $twig = new \Twig\Environment($loader, [
             'cache' => '../cache'
         ]);
