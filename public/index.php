@@ -3,18 +3,17 @@
 require __DIR__ . '/../vendor/autoload.php';
 // require __DIR__ . '/../framework-x/vendor/autoload.php';
 
-$credentials = ':root@localhost/fm_x?idle=0.001';
-$db = (new React\MySQL\Factory())->createLazyConnection($credentials);
+$container = new FrameworkX\Container([
+    React\MySQL\ConnectionInterface::class => function () {
+        $credentials = 'root:@localhost/fm_x?idle=0.001';
+        return (new React\MySQL\Factory())->createLazyConnection($credentials);
+    }
+]);
 
-$app = new FrameworkX\App();
+$app = new FrameworkX\App($container);
 
-$app->get('/', new Acme\Todo\HelloController());
-$app->get('/user/{name}', new Acme\Todo\UserController());
-$app->get('/users', new Acme\Todo\Middleware\AsyncContentTypeMiddleware(), new Acme\Todo\AsyncUserController());
-// $app->get('/crud', function() {
-//     $controller = new Acme\Todo\Controllers\CrudController();
-//     return $controller->view();
-// });
-$app->get('/crud', new Acme\Todo\Controllers\CrudController());
+$app->get('/', Acme\Todo\HelloController::class);
+$app->get('/user/{id}', Acme\Todo\Controllers\UserController::class);
+$app->get('/crud', Acme\Todo\Controllers\CrudController::class);
 
 $app->run();
