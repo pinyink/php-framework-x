@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\Todo;
+namespace Acme\Todo\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
