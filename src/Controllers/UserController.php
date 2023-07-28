@@ -25,8 +25,17 @@ class UserController
         }
 
         $data = $query['user_user'];
+
+        $query = $this->userModel->find(2);
+        if ($query === null) {
+            return Response::plaintext(
+                "User not found\n"
+            )->withStatus(Response::STATUS_NOT_FOUND);
+        }
+
+        $data2 = $query['user_user'];
         return Response::plaintext(
-            $data
+            $data.' '.$data2
         );
     }
 }
