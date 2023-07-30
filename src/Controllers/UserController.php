@@ -17,7 +17,7 @@ class UserController
     public function __invoke(ServerRequestInterface $request)
     {
         $id = $request->getAttribute('id');
-        $query = $this->userModel->findAll();
+        $query = $this->userModel->find($id);
         if ($query === null) {
             return Response::plaintext(
                 "User not found\n"
