@@ -22,45 +22,89 @@ class Model
      * @var string
      */
     protected $primaryKey = 'id';
-    protected $setValue;
-    protected $params;
 
     public function __construct(ConnectionInterface $db)
     {
         $this->db = $db;
     }
 
-    private function set(array $data)
+    public function query(string $query, array $params)
     {
-        $set = '';
-        $params = array();
-        $x = 1;
-        foreach ($data as $key => $value) {
-            if ($x >= 1) {
-                $set .= ",\"". $key ."\" = ?";
-            } else {
-                $set .= " ".$key ." = ?";
-            }
-            array_push($params, $value);
+        $result = await($this->db->query(
+            $query, $params
+        ));
+        
+        assert($result instanceof QueryResult);
+
+        if (count($result->resultRows) === 0) {
+            return null;
         }
-        $this->params = $params;
-        $this->setValue = $set;
-        return true;
+
+        return $result->resultRows;
     }
 
     public function insert(array $data)
     {
-        $query = "insert into ".$this->table." set";
-        self::set($data);
+        if (empty($data)) {
+            return null;
+        }
+        $columnValue = [];
+        $column = [];
+        $params = [];
+        foreach ($data as $key => $value) {
+            array_push($column, $key);
+            array_push($columnValue, $value);
+            array_push($params, "?");
+        }
+        $column = implode(', ', $column);
+        $params = implode(', ', $params);
+
+        $query = "insert into ".$this->table." ($column) VALUES ($params)";
+        
         $result = await($this->db->query(
-            $query.$this->setValue, $this->params
+            $query, $columnValue
+        ));
+        assert($result instanceof QueryResult);
+
+        return json_encode($result->insertId);
+    }
+
+    public function update(string $id, array $data)
+    {
+        if (empty($data)) {
+            return null;
+        }
+        $columnValue = [];
+        $column = [];
+
+        $query = "UPDATE ".$this->table;
+        foreach ($data as $key => $value) {
+            array_push($column, $key . " = ?");
+            array_push($columnValue, $value);
+        }
+        array_push($columnValue, $id);
+        $column = implode(', ', $column);
+        $query = $query . " SET $column WHERE ".$this->primaryKey.' = ?';
+        $result = await($this->db->query(
+            $query, $columnValue
         ));
         assert($result instanceof QueryResult);
 
         return json_encode($result->affectedRows);
     }
 
-    public function find(string $id)
+    public function delete(string $id)
+    {
+        $result = await($this->db->query(
+            'DELETE FROM '.$this->table.' WHERE '.$this->primaryKey.' = ?',
+            [$id]
+        ));
+        assert($result instanceof QueryResult);
+
+        return json_encode($result->affectedRows);
+    }
+
+    public function find(int $id)
     {
         $result = await($this->db->query(
             'SELECT * FROM '.$this->table.' WHERE '.$this->primaryKey.' = ? limit 1',
@@ -75,17 +119,27 @@ class Model
         return $result->resultRows[0];
     }
 
-    public function findAll(int $limit = 0, int $offset = 0)
+    public function findAll(array $where = [], int $limit = 0, int $offset = 0)
     {
-        if ($limit != 0) {
-            $result = await($this->db->query(
-                'SELECT * FROM '.$this->table.' limit ? offset ?', [$limit, $offset]
-            ));
-        } else {
-            $result = await($this->db->query(
-                'SELECT * FROM '.$this->table
-            ));
+        $query = 'SELECT * FROM '.$this->table;
+        $paramValue = [];
+        if (!empty($where)) {
+            $query .= " WHERE 1=1 ";
+            foreach ($where as $key => $value) {
+                $query .= "AND {$key} = ? ";
+                array_push($paramValue, $value);
+            }
         }
+        
+        if ($limit != 0) {
+            $query .= 'limit ? offset ?';
+            array_push($paramValue, $limit);
+            array_push($paramValue, $offset);
+        }
+
+        $result = await($this->db->query(
+            $query, $paramValue
+        ));
         
         assert($result instanceof QueryResult);
 
