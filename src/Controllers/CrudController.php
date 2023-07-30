@@ -10,7 +10,7 @@ class CrudController
     public function __invoke()
     {
         $tema = new Tema();
-        $response = $tema->render('first.html.twig', ['name' => 'John Doe', 
+        $response = $tema->render('tema/first.html.twig', ['name' => 'John Doe', 
         'occupation' => 'gardener']);
         return Response::html($response);
     }

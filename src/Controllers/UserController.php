@@ -16,26 +16,29 @@ class UserController
     }
     public function __invoke(ServerRequestInterface $request)
     {
-        $id = $request->getAttribute('id');
-        $query = $this->userModel->find($id);
-        if ($query === null) {
+        // $id = $request->getAttribute('id');
+        // $query = $this->userModel->find($id);
+        // if ($query === null) {
+        //     return Response::plaintext(
+        //         "User not found\n"
+        //     )->withStatus(Response::STATUS_NOT_FOUND);
+        // }
+
+        // $data = $query['user_user'];
+
+        // return Response::html(
+        //     $data
+        // );
+
+        $query = $this->userModel->insert(['user_user' => 'administrator', 'level' => 'admin']);
+        if ($query <= 0) {
             return Response::plaintext(
-                "User not found\n"
+                "Failed to save\n"
             )->withStatus(Response::STATUS_NOT_FOUND);
         }
 
-        $data = $query['user_user'];
-
-        $query = $this->userModel->find(2);
-        if ($query === null) {
-            return Response::plaintext(
-                "User not found\n"
-            )->withStatus(Response::STATUS_NOT_FOUND);
-        }
-
-        $data2 = $query['user_user'];
-        return Response::plaintext(
-            $data.' '.$data2
+        return Response::html(
+            'success'
         );
     }
 }
