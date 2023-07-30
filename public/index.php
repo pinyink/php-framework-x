@@ -16,6 +16,7 @@ $app = new FrameworkX\App($container);
 
 $app->get('/', Acme\Todo\HelloController::class);
 $app->get('/user/{id}', Acme\Todo\Controllers\UserController::class);
-$app->get('/crud', Acme\Todo\Controllers\CrudController::class);
+$app->get('/crud', Acme\Todo\Controllers\Crud\CrudController::class);
+$app->get('/crud/insert', Acme\Todo\Controllers\Crud\CrudInsertController::class);
 
 $app->run();
