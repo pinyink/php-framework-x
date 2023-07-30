@@ -7,7 +7,8 @@ class Tema {
     {
         $loader = new \Twig\Loader\FilesystemLoader('../src/Views');
         $twig = new \Twig\Environment($loader, [
-            'cache' => '../cache'
+            'cache' => '../cache',
+            'auto_reload' => 1
         ]);
         return $response = $twig->render($path, $data);
     }
