@@ -59,6 +59,43 @@
 {% block script %}
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 <script>
+    var table;
+    var save_method;
+    $(document).ready(function () {
+        table = $('#example').DataTable({
+                    scrollCollapse: true,
+                    responsive: true,
+                    autoWidth: false,
+                    language: { search: "",
+                        searchPlaceholder: "Search",
+                        sLengthMenu: "_MENU_items"
+                    },
+                    "order": [],
+                    "ajax": {
+                        "url": "/crud/datatable",
+                        "headers": {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        "type": "POST",
+                        "data": function(data) {
+                            data.token = $('meta[name=TOKEN]').attr("content");
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR.responseText);
+                        }
+                    },
+                    //optional
+                    "columnDefs": [{
+                        "targets": [0, 1],
+                        "orderable": false,
+                    }, ],
+                });
+    });
+    
+    function reload_table() {
+        table.ajax.reload(null, false);
+    }
+
     $('#form-user').on('submit', function(e) {
         e.preventDefault();
         $.ajax({
