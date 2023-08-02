@@ -23,9 +23,20 @@ class Model
      */
     protected $primaryKey = 'id';
 
+    private $result;
+
     public function __construct(ConnectionInterface $db)
     {
         $this->db = $db;
+        $this->result = "select * from $this->table";
+    }
+
+    /**
+     * Get the value of result
+     */
+    public function getResult()
+    {
+        return $this->result;
     }
 
     public function query(string $query, array $params)
