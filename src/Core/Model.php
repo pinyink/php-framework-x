@@ -33,14 +33,33 @@ class Model
         $result = await($this->db->query(
             $query, $params
         ));
-        
         assert($result instanceof QueryResult);
-
         if (count($result->resultRows) === 0) {
             return null;
         }
-
         return $result->resultRows;
+    }
+
+    public function exists(array $where) 
+    {
+        $query = 'SELECT count('.$this->primaryKey.') count FROM '.$this->table;
+        $paramValue = [];
+        if (!empty($where)) {
+            $query .= " WHERE 1=1 ";
+            foreach ($where as $key => $value) {
+                $query .= "AND {$key} = ? ";
+                array_push($paramValue, $value);
+            }
+        }
+        $result = await($this->db->query(
+            $query, $paramValue
+        ));
+        assert($result instanceof QueryResult);
+        if (count($result->resultRows) === 0) {
+            return null;
+        }
+        $queryResult = $result->resultRows[0];
+        return $queryResult['count'];
     }
 
     public function insert(array $data)
@@ -58,14 +77,11 @@ class Model
         }
         $column = implode(', ', $column);
         $params = implode(', ', $params);
-
         $query = "insert into ".$this->table." ($column) VALUES ($params)";
-        
         $result = await($this->db->query(
             $query, $columnValue
         ));
         assert($result instanceof QueryResult);
-
         return json_encode($result->insertId);
     }
 
@@ -76,7 +92,6 @@ class Model
         }
         $columnValue = [];
         $column = [];
-
         $query = "UPDATE ".$this->table;
         foreach ($data as $key => $value) {
             array_push($column, $key . " = ?");
@@ -89,7 +104,6 @@ class Model
             $query, $columnValue
         ));
         assert($result instanceof QueryResult);
-
         return json_encode($result->affectedRows);
     }
 
@@ -100,22 +114,19 @@ class Model
             [$id]
         ));
         assert($result instanceof QueryResult);
-
         return json_encode($result->affectedRows);
     }
 
-    public function find(int $id)
+    public function find(string $id)
     {
         $result = await($this->db->query(
             'SELECT * FROM '.$this->table.' WHERE '.$this->primaryKey.' = ? limit 1',
             [$id]
         ));
         assert($result instanceof QueryResult);
-
         if (count($result->resultRows) === 0) {
             return null;
         }
-
         return $result->resultRows[0];
     }
 
@@ -130,23 +141,18 @@ class Model
                 array_push($paramValue, $value);
             }
         }
-        
         if ($limit != 0) {
             $query .= 'limit ? offset ?';
             array_push($paramValue, $limit);
             array_push($paramValue, $offset);
         }
-
         $result = await($this->db->query(
             $query, $paramValue
         ));
-        
         assert($result instanceof QueryResult);
-
         if (count($result->resultRows) === 0) {
             return null;
         }
-
         return $result->resultRows;
     }
 }
