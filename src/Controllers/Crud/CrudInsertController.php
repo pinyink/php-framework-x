@@ -20,8 +20,13 @@ class CrudInsertController
         $data = $request->getParsedBody();
         $username = $data['username'];
         $query = $this->userModel->exists(['user_user' => $username]);
+        $log['message'] = "Username failed to save";
+        if ($query == 0) {
+            $qInsert = $this->userModel->insert(['user_user' => $username]);
+            $log['message'] = $qInsert >= 1 ? 'save success' : 'failed to save';
+        }
         return Response::json(
-            $query
+            $log
         );
     }
 }

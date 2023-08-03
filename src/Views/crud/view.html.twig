@@ -9,7 +9,7 @@
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-12">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah</button>
+            <button class="btn btn-primary" id="btnAdd">Tambah</button>
             <hr>
             <table id="example" class="table display" style="width:100%">
                 <thead>
@@ -42,6 +42,7 @@
             </div>
             <div class="modal-body">
                 <form action="" method="post" id="form-user">
+                    <input type="hidden" name="method" value="">
                     <div class="form-group">
                         <label for="">Username</label>
                         <input type="text" class="form-control" name="username">
@@ -60,7 +61,19 @@
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 <script>
     var table;
+
     var save_method;
+
+    const btnAdd = document.querySelector('#btnAdd');
+
+    var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+        keyboard: false
+    });
+
+    btnAdd.addEventListener('click', function() {
+        myModal.show();
+    });
+
     $(document).ready(function () {
         table = $('#example').DataTable({
                     scrollCollapse: true,
@@ -105,6 +118,8 @@
             dataType: "JSON",
             success: function (response) {
                 console.log(response);
+                reload_table();
+                myModal.hide();
             },
             error: function (jqXHR) {
                 console.log(jqXHR.responseText);

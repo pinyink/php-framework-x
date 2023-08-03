@@ -17,7 +17,7 @@ class CrudDatatableController
 
     public function __invoke(ServerRequestInterface $request) : Response
     {
-        $params = $request->getParsedBody();
+        $params = $request->getParsedBody() ?? array();
 
         // load datatable
         $this->userModel->setColumnSearch(['user_user', 'user_level']);
