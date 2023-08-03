@@ -23,20 +23,9 @@ class Model
      */
     protected $primaryKey = 'id';
 
-    private $result;
-
     public function __construct(ConnectionInterface $db)
     {
         $this->db = $db;
-        $this->result = "select * from $this->table";
-    }
-
-    /**
-     * Get the value of result
-     */
-    public function getResult()
-    {
-        return $this->result;
     }
 
     public function query(string $query, array $params)
@@ -165,5 +154,119 @@ class Model
             return null;
         }
         return $result->resultRows;
+    }
+
+
+    /**
+     * Query for Datatables
+     *
+     */ 
+    private string $queryDatatable;
+
+    /**
+     * Query for Filtered Datatables
+     *
+     */ 
+    private string $filteredDatatable;
+
+    /**
+     * columnSearch Datatables
+     *
+     */ 
+    private array $columnSearch;
+
+    /**
+     * columnOrder Datatables
+     *
+     */ 
+    private array $columnOrder;
+
+    /**
+     * Set the value of queryDatatable without where
+     *
+     * @return  self
+     */ 
+    public function setQueryDatatable($queryDatatable)
+    {
+        $this->queryDatatable = $queryDatatable;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of filteredDatatable
+     *
+     * @return  self
+     */ 
+    public function setFilteredDatatable($filteredDatatable)
+    {
+        $this->filteredDatatable = $filteredDatatable;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of columnSearch
+     *
+     * @return  self
+     */ 
+    public function setColumnSearch(array $columnSearch)
+    {
+        $this->columnSearch = $columnSearch;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of columnOrder
+     *
+     * @return  self
+     */ 
+    public function setColumnOrder(array $columnOrder)
+    {
+        $this->columnOrder = $columnOrder;
+
+        return $this;
+    }
+
+    public function datatable(array $params) : array
+    {
+        $columnSearch = $this->columnSearch;
+        $coloumOrder = $this->columnOrder;
+
+        $query = $this->queryDatatable;
+        $queryFiltered = $this->filteredDatatable;
+        $queryCount = "select count(*) total from $this->table";
+
+        // if search active
+        $paramValue = [];
+        foreach ($columnSearch as $kSearch => $vSearch) {
+            if (isset($params['search']['value'])) {
+                $query .= " WHERE 1=1 ";
+                $queryFiltered .= " WHERE 1=1 ";
+                foreach ($params['search']['value'] as $key => $value) {
+                    $query .= "AND {$key} like '%?%' ";
+                    $queryFiltered .= "AND {$key} like '%?%' ";
+                    array_push($paramValue, $value);
+                }
+            }
+        }
+        if (isset($params['order'])) {
+            $query .= " order by ".$params['order']['0']['column']." ".$params['order']['0']['dir'];
+        }
+        if (isset($params['length']) && $params['length'] != -1) {
+            $query .= " limit ? offset ?" ;
+            array_push($paramValue, $params['length']);
+            array_push($paramValue, $params['start']);
+        }
+
+        $data = $this->query($query, $paramValue);
+        $filter = $this->query($queryFiltered, $paramValue);
+        $count = $this->query($queryCount, []);
+        return [
+            'data' => $data,
+            'filter' => $filter[0]['total'],
+            'count' => $count[0]['total']
+        ];
     }
 }
