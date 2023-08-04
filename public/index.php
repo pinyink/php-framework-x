@@ -17,5 +17,6 @@ $app->get('/user/{id}', Acme\Todo\Controllers\UserController::class);
 $app->get('/crud', Acme\Todo\Controllers\Crud\CrudController::class);
 $app->post('/crud/insert', Acme\Todo\Controllers\Crud\CrudInsertController::class);
 $app->post('/crud/datatable', Acme\Todo\Controllers\Crud\CrudDatatableController::class);
+$app->get('/crud/get/{id}', Acme\Todo\Controllers\Crud\CrudGetController::class);
 
 $app->run();

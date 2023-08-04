@@ -17,6 +17,7 @@
                         <th>Username</th>
                         <th>Level</th>
                         <th>Updated At</th>
+                        <th>#</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -24,6 +25,7 @@
                         <th>Username</th>
                         <th>Level</th>
                         <th>Updated At</th>
+                        <th>#</th>
                     </tr>
                 </tfoot>
             </table>
@@ -43,9 +45,14 @@
             <div class="modal-body">
                 <form action="" method="post" id="form-user">
                     <input type="hidden" name="method" value="">
+                    <input type="hidden" name="id" value="">
                     <div class="form-group">
                         <label for="">Username</label>
                         <input type="text" class="form-control" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Level</label>
+                        <input type="text" class="form-control" name="level">
                     </div>
             </div>
             <div class="modal-footer">
@@ -62,51 +69,57 @@
 <script>
     var table;
 
-    var save_method;
-
-    const btnAdd = document.querySelector('#btnAdd');
+    var saveMethod = document.querySelector('[name="method"]');
 
     var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
         keyboard: false
     });
+    
+    const btnAdd = document.querySelector('#btnAdd');
 
     btnAdd.addEventListener('click', function() {
         myModal.show();
+        saveMethod.value = 'add';
+        resetForm();
     });
 
     $(document).ready(function () {
         table = $('#example').DataTable({
-                    scrollCollapse: true,
-                    responsive: true,
-                    autoWidth: false,
-                    language: { search: "",
-                        searchPlaceholder: "Search",
-                        sLengthMenu: "_MENU_items"
-                    },
-                    "order": [],
-                    "ajax": {
-                        "url": "/crud/datatable",
-                        "headers": {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        "type": "POST",
-                        "data": function(data) {
-                            data.token = $('meta[name=TOKEN]').attr("content");
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.log(jqXHR.responseText);
-                        }
-                    },
-                    //optional
-                    "columnDefs": [{
-                        "targets": [2],
-                        "orderable": false,
-                    }, ],
-                });
+            scrollCollapse: true,
+            responsive: true,
+            autoWidth: false,
+            language: { search: "",
+                searchPlaceholder: "Search",
+                sLengthMenu: "_MENU_items"
+            },
+            "order": [],
+            "ajax": {
+                "url": "/crud/datatable",
+                "headers": {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                "type": "POST",
+                "data": function(data) {
+                    data.token = $('meta[name=TOKEN]').attr("content");
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR.responseText);
+                }
+            },
+            //optional
+            "columnDefs": [{
+                "targets": [2],
+                "orderable": false,
+            }, ],
+        });
     });
     
     function reload_table() {
         table.ajax.reload(null, false);
+    }
+
+    function resetForm() {
+        $('#form-user')[0].reset();
     }
 
     $('#form-user').on('submit', function(e) {
@@ -117,7 +130,7 @@
             data: $('#form-user').serialize(),
             dataType: "JSON",
             success: function (response) {
-                console.log(response);
+                alert(response.message);
                 reload_table();
                 myModal.hide();
             },
@@ -126,5 +139,21 @@
             }
         });
     });
+
+    function edit_data(id) {
+        myModal.show();
+        saveMethod.value = 'edit';
+        resetForm();
+        $('[name="id"]').val(id);
+        $.ajax({
+            type: "GET",
+            url: "/crud/get/"+id,
+            dataType: "JSON",
+            success: function (response) {
+                $('[name="username"]').val(response.user_user);
+                $('[name="level"]').val(response.user_level);
+            }
+        });
+    }
 </script>
 {% endblock %}

@@ -32,6 +32,7 @@ class CrudDatatableController
             $row[] = $value['user_user'];
             $row[] = $value['user_level'];
             $row[] = $value['user_updated_at'];
+            $row[] = "<button class='btn btn-xs btn-primary' onclick='edit_data(".$value['user_id'].")'>Edit</button>";
             $data[] = $row;
         }
         $output = [

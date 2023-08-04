@@ -21,8 +21,20 @@ class CrudInsertController
         $username = $data['username'];
         $query = $this->userModel->exists(['user_user' => $username]);
         $log['message'] = "Username failed to save";
-        if ($query == 0) {
-            $qInsert = $this->userModel->insert(['user_user' => $username]);
+        $set = [
+            'user_user' => $username,
+            'user_level' => $data['level'],
+            'user_updated_at' => date('Y-m-d H:i:s')
+        ];
+        if ($data['method'] == 'add') {
+            if ($query == 0) {
+                $qInsert = $this->userModel->insert($set);
+                $log['message'] = $qInsert >= 1 ? 'save success' : 'failed to save';
+            } else {
+                $log['message'] = "Username Exist";
+            }
+        } else {
+            $qInsert = $this->userModel->update($data['id'], $set);
             $log['message'] = $qInsert >= 1 ? 'save success' : 'failed to save';
         }
         return Response::json(

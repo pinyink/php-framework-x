@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/clue/framework-x.git",
-                "reference": "f7bf6ee136f03e4657dc89de600dbef4749c37da"
+                "reference": "277e9a582c90042e3e32c7ef045123848ef147fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/clue/framework-x/zipball/f7bf6ee136f03e4657dc89de600dbef4749c37da",
-                "reference": "f7bf6ee136f03e4657dc89de600dbef4749c37da",
+                "url": "https://api.github.com/repos/clue/framework-x/zipball/277e9a582c90042e3e32c7ef045123848ef147fc",
+                "reference": "277e9a582c90042e3e32c7ef045123848ef147fc",
                 "shasum": ""
             },
             "require": {
@@ -32,7 +32,7 @@
                 "phpstan/phpstan": "1.10.16 || 1.4.10",
                 "phpunit/phpunit": "^9.6 || ^7.5",
                 "psr/container": "^2 || ^1",
-                "react/promise-timer": "^1.9"
+                "react/promise-timer": "^1.10"
             },
             "default-branch": true,
             "type": "library",
@@ -77,7 +77,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-06-07T13:56:25+00:00"
+            "time": "2023-07-31T08:09:33+00:00"
         },
         {
             "name": "evenement/evenement",
@@ -287,32 +287,35 @@
         },
         {
             "name": "react/async",
-            "version": "v3.1.0",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/async.git",
-                "reference": "b51cc55b4004fe0e69da95d178d1cfb0334cd6ce"
+                "reference": "b9641ac600b4b144e71a87dcf1be4d41dd3a3548"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/async/zipball/b51cc55b4004fe0e69da95d178d1cfb0334cd6ce",
-                "reference": "b51cc55b4004fe0e69da95d178d1cfb0334cd6ce",
+                "url": "https://api.github.com/repos/reactphp/async/zipball/b9641ac600b4b144e71a87dcf1be4d41dd3a3548",
+                "reference": "b9641ac600b4b144e71a87dcf1be4d41dd3a3548",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1",
+                "php": ">=8.1",
                 "react/event-loop": "^1.2",
                 "react/promise": "^3.0 || ^2.8 || ^1.2.1"
             },
             "require-dev": {
-                "phpstan/phpstan": "1.10.18 || 1.4.10",
-                "phpunit/phpunit": "^9.5 || ^7.5"
+                "phpstan/phpstan": "1.10.18",
+                "phpunit/phpunit": "^9.5"
             },
             "type": "library",
             "autoload": {
                 "files": [
                     "src/functions_include.php"
-                ]
+                ],
+                "psr-4": {
+                    "React\\Async\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -340,14 +343,14 @@
                     "homepage": "https://cboden.dev/"
                 }
             ],
-            "description": "Async utilities for ReactPHP",
+            "description": "Async utilities and fibers for ReactPHP",
             "keywords": [
                 "async",
                 "reactphp"
             ],
             "support": {
                 "issues": "https://github.com/reactphp/async/issues",
-                "source": "https://github.com/reactphp/async/tree/v3.1.0"
+                "source": "https://github.com/reactphp/async/tree/v4.1.0"
             },
             "funding": [
                 {
@@ -355,7 +358,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2023-06-22T14:06:01+00:00"
+            "time": "2023-06-22T14:10:50+00:00"
         },
         {
             "name": "react/cache",
@@ -675,12 +678,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/friends-of-reactphp/mysql.git",
-                "reference": "a13dbbb296b7e231c6e6309e9a7312b7f078fb72"
+                "reference": "f9c55f5bd59004fe14a853f688ddd3dc6a8168c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/friends-of-reactphp/mysql/zipball/a13dbbb296b7e231c6e6309e9a7312b7f078fb72",
-                "reference": "a13dbbb296b7e231c6e6309e9a7312b7f078fb72",
+                "url": "https://api.github.com/repos/friends-of-reactphp/mysql/zipball/f9c55f5bd59004fe14a853f688ddd3dc6a8168c6",
+                "reference": "f9c55f5bd59004fe14a853f688ddd3dc6a8168c6",
                 "shasum": ""
             },
             "require": {
@@ -688,7 +691,7 @@
                 "php": ">=5.4.0",
                 "react/event-loop": "^1.2",
                 "react/promise": "^3 || ^2.7",
-                "react/promise-stream": "^1.4",
+                "react/promise-stream": "^1.6",
                 "react/promise-timer": "^1.9",
                 "react/socket": "^1.12"
             },
@@ -718,27 +721,28 @@
                 "issues": "https://github.com/friends-of-reactphp/mysql/issues",
                 "source": "https://github.com/friends-of-reactphp/mysql/tree/0.6.x"
             },
-            "time": "2023-02-06T06:46:44+00:00"
+            "time": "2023-07-10T12:38:45+00:00"
         },
         {
             "name": "react/promise",
-            "version": "v2.10.0",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/promise.git",
-                "reference": "f913fb8cceba1e6644b7b90c4bfb678ed8a3ef38"
+                "reference": "c86753c76fd3be465d93b308f18d189f01a22be4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/promise/zipball/f913fb8cceba1e6644b7b90c4bfb678ed8a3ef38",
-                "reference": "f913fb8cceba1e6644b7b90c4bfb678ed8a3ef38",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/c86753c76fd3be465d93b308f18d189f01a22be4",
+                "reference": "c86753c76fd3be465d93b308f18d189f01a22be4",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0"
+                "php": ">=7.1.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.5 || ^5.7 || ^4.8.36"
+                "phpstan/phpstan": "1.10.20 || 1.4.10",
+                "phpunit/phpunit": "^9.5 || ^7.5"
             },
             "type": "library",
             "autoload": {
@@ -782,7 +786,7 @@
             ],
             "support": {
                 "issues": "https://github.com/reactphp/promise/issues",
-                "source": "https://github.com/reactphp/promise/tree/v2.10.0"
+                "source": "https://github.com/reactphp/promise/tree/v3.0.0"
             },
             "funding": [
                 {
@@ -790,20 +794,20 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2023-05-02T15:15:43+00:00"
+            "time": "2023-07-11T16:12:49+00:00"
         },
         {
             "name": "react/promise-stream",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/promise-stream.git",
-                "reference": "e6d2805e09ad50c4896f65f5e8705fe4ee7731a3"
+                "reference": "87d1399a33926fd5ba28a7647346b71482787502"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/promise-stream/zipball/e6d2805e09ad50c4896f65f5e8705fe4ee7731a3",
-                "reference": "e6d2805e09ad50c4896f65f5e8705fe4ee7731a3",
+                "url": "https://api.github.com/repos/reactphp/promise-stream/zipball/87d1399a33926fd5ba28a7647346b71482787502",
+                "reference": "87d1399a33926fd5ba28a7647346b71482787502",
                 "shasum": ""
             },
             "require": {
@@ -812,7 +816,7 @@
                 "react/stream": "^1.0 || ^0.7 || ^0.6 || ^0.5 || ^0.4.6"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8.35"
+                "phpunit/phpunit": "^9.5 || ^5.7 || ^4.8.35"
             },
             "type": "library",
             "autoload": {
@@ -861,32 +865,28 @@
             ],
             "support": {
                 "issues": "https://github.com/reactphp/promise-stream/issues",
-                "source": "https://github.com/reactphp/promise-stream/tree/v1.5.0"
+                "source": "https://github.com/reactphp/promise-stream/tree/v1.6.0"
             },
             "funding": [
                 {
-                    "url": "https://github.com/WyriHaximus",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/clue",
-                    "type": "github"
+                    "url": "https://opencollective.com/reactphp",
+                    "type": "open_collective"
                 }
             ],
-            "time": "2022-09-09T11:42:18+00:00"
+            "time": "2023-07-07T10:11:54+00:00"
         },
         {
             "name": "react/promise-timer",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/promise-timer.git",
-                "reference": "aa7a73c74b8d8c0f622f5982ff7b0351bc29e495"
+                "reference": "4cb85c1c2125390748e3908120bb82feb99fe766"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/promise-timer/zipball/aa7a73c74b8d8c0f622f5982ff7b0351bc29e495",
-                "reference": "aa7a73c74b8d8c0f622f5982ff7b0351bc29e495",
+                "url": "https://api.github.com/repos/reactphp/promise-timer/zipball/4cb85c1c2125390748e3908120bb82feb99fe766",
+                "reference": "4cb85c1c2125390748e3908120bb82feb99fe766",
                 "shasum": ""
             },
             "require": {
@@ -895,7 +895,7 @@
                 "react/promise": "^3.0 || ^2.7.0 || ^1.2.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8.35"
+                "phpunit/phpunit": "^9.5 || ^5.7 || ^4.8.35"
             },
             "type": "library",
             "autoload": {
@@ -944,19 +944,15 @@
             ],
             "support": {
                 "issues": "https://github.com/reactphp/promise-timer/issues",
-                "source": "https://github.com/reactphp/promise-timer/tree/v1.9.0"
+                "source": "https://github.com/reactphp/promise-timer/tree/v1.10.0"
             },
             "funding": [
                 {
-                    "url": "https://github.com/WyriHaximus",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/clue",
-                    "type": "github"
+                    "url": "https://opencollective.com/reactphp",
+                    "type": "open_collective"
                 }
             ],
-            "time": "2022-06-13T13:41:03+00:00"
+            "time": "2023-07-20T15:40:28+00:00"
         },
         {
             "name": "react/socket",
@@ -1344,16 +1340,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.6.1",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd"
+                "reference": "5cf942bbab3df42afa918caeba947f1b690af64b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd",
-                "reference": "7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/5cf942bbab3df42afa918caeba947f1b690af64b",
+                "reference": "5cf942bbab3df42afa918caeba947f1b690af64b",
                 "shasum": ""
             },
             "require": {
@@ -1399,7 +1395,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.6.1"
+                "source": "https://github.com/twigphp/Twig/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -1411,7 +1407,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-08T12:52:13+00:00"
+            "time": "2023-07-26T07:16:09+00:00"
         }
     ],
     "packages-dev": [],
