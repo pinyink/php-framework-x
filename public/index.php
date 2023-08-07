@@ -7,7 +7,8 @@ $container = new FrameworkX\Container([
     React\MySQL\ConnectionInterface::class => function () {
         $credentials = 'root:@localhost/fm_x?idle=0.001';
         return (new React\MySQL\Factory())->createLazyConnection($credentials);
-    }
+    },
+    'X_LISTEN' => fn(string $PORT = '8000') => '0.0.0.0:' . $PORT
 ]);
 
 $app = new FrameworkX\App($container);
