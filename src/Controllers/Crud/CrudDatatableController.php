@@ -2,29 +2,34 @@
 
 namespace Acme\Todo\Controllers\Crud;
 
+use Acme\Todo\Core\Datatable;
 use Acme\Todo\Models\UserModel;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Message\Response;
 
 class CrudDatatableController
 {
-    private $userModel;
+    private $userModel, $datatable;
 
-    function __construct(UserModel $userModel)
+    function __construct(UserModel $userModel, Datatable $datatable)
     {
         $this->userModel = $userModel;
+        $this->datatable = $datatable;
     }
 
     public function __invoke(ServerRequestInterface $request) : Response
     {
         $params = $request->getParsedBody() ?? array();
 
-        // load datatable
-        $this->userModel->setColumnSearch(['user_user', 'user_level']);
-        $this->userModel->setColumnOrder(['user_user', 'user_level']);
-        $this->userModel->setQueryDatatable("select * from users");
-        $this->userModel->setFilteredDatatable("select count(*) total from users");
-        $queryResult = $this->userModel->datatable($params);
+        // load datatable set columnsearch and columnorder
+        $this->datatable->setColumnSearch(['user_user', 'user_level']);
+        $this->datatable->setColumnOrder(['user_user', 'user_level']);
+
+        $this->datatable->setTable('users');
+        $this->datatable->setQueryDatatable("select * from users");
+        $this->datatable->setWhere(['user_level' => 'user']);
+        // execution datatable
+        $queryResult = $this->datatable->datatable($params);
 
         $data = [];
         foreach ($queryResult['data'] as $key => $value) {
@@ -37,7 +42,7 @@ class CrudDatatableController
         }
         $output = [
             "draw" => 0,
-            "recordsTotal" =>$queryResult['count'],
+            "recordsTotal" => $queryResult['count'],
             "recordsFiltered" => $queryResult['filter'],
             "data" => $data,
         ];

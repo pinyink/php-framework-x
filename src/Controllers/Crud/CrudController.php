@@ -21,5 +21,12 @@ class CrudController
         $response = $tema->render('crud/view.html.twig', ['name' => 'John Doe', 
         'occupation' => 'gardener']);
         return Response::html($response);
+
+        // $string = "select user_user, user_level from users";
+        // $strPost = strpos($string, 'from users');
+        // $str = substr($string, 0, $strPost);
+        // // return Response::html($strPost);
+        // print_r($str);
+        // // return Response::html('');
     }
 }
