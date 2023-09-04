@@ -2,7 +2,8 @@
     "require": {
         "clue/framework-x": "dev-main",
         "twig/twig": "^3.0",
-        "react/mysql": "^0.6@dev"
+        "react/mysql": "^0.6@dev",
+        "react/cache": "1.2"
     },
     "autoload": {
         "psr-4": {

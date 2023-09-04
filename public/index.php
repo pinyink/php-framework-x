@@ -15,7 +15,7 @@ $app = new FrameworkX\App($container);
 
 $app->get('/', Acme\Todo\HelloController::class);
 $app->get('/user/{id}', Acme\Todo\Controllers\UserController::class);
-$app->get('/crud', Acme\Todo\Controllers\Crud\CrudController::class);
+$app->get('/crud', Acme\Todo\Middleware\SessionMiddleware::class, Acme\Todo\Controllers\Crud\CrudController::class);
 $app->post('/crud/insert', Acme\Todo\Controllers\Crud\CrudInsertController::class);
 $app->post('/crud/datatable', Acme\Todo\Controllers\Crud\CrudDatatableController::class);
 $app->get('/crud/get/{id}', Acme\Todo\Controllers\Crud\CrudGetController::class);
