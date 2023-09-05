@@ -8,8 +8,9 @@ class HelloController
 {
     public function __invoke()
     {
+        $g = $_COOKIE['cobacookie'];
         return Response::html(
-            "<h1>Hello World</h1>"
+            "<h1>".$g."</h1>"
         );
     }
 }
