@@ -1,14 +1,9 @@
 <?php
 
-use League\OAuth2\Server\AuthorizationServer;
-use League\OAuth2\Server\Repositories\ClientRepositoryInterface as ClientRepository;
-use League\OAuth2\Server\Repositories\ScopeRepositoryInterface as ScopeRepository;
-use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface as AccessTokenRepository;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
-
 require __DIR__ . '/../vendor/autoload.php';
 // require __DIR__ . '/../framework-x/vendor/autoload.php';
+
+define('PUBLICPATH', realpath( __DIR__. '../../public') . DIRECTORY_SEPARATOR);
 
 $container = new FrameworkX\Container([
     React\MySQL\ConnectionInterface::class => function () {
