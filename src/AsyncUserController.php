@@ -24,7 +24,7 @@ class AsyncUserController
     /**
      * @return PromiseInterface<string>
      */
-    private function fetchRandomUserName(): PromiseInterface
+    private function fetchRandomUserName()
     {
         return new Promise(function ($resolve) {
             Loop::addTimer(0.01, function () use ($resolve) {

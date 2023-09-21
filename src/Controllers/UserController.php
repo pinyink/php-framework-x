@@ -14,6 +14,7 @@ class UserController
     {
         $this->userModel = $userModel;
     }
+
     public function __invoke(ServerRequestInterface $request)
     {
         $id = $request->getAttribute('id');
@@ -27,6 +28,11 @@ class UserController
         $data = json_encode($query);
         return Response::html(
             $data
+        );
+
+        // kodeku
+        return Response::json(
+            $query
         );
     }
 }
