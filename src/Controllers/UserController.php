@@ -24,12 +24,6 @@ class UserController
                 "User not found\n"
             )->withStatus(Response::STATUS_NOT_FOUND);
         }
-
-        $data = json_encode($query);
-        return Response::html(
-            $data
-        );
-
         // kodeku
         return Response::json(
             $query
