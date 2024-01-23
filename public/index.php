@@ -1,5 +1,7 @@
 <?php
 
+use Acme\Todo\Config\AppConfig;
+
 require __DIR__ . '/../vendor/autoload.php';
 // require __DIR__ . '/../framework-x/vendor/autoload.php';
 
@@ -7,8 +9,8 @@ define('PUBLICPATH', realpath( __DIR__. '../../public') . DIRECTORY_SEPARATOR);
 
 $container = new FrameworkX\Container([
     React\MySQL\ConnectionInterface::class => function () {
-        $credentials = 'root:@localhost/fm_x?idle=0.001';
-        return (new React\MySQL\Factory())->createLazyConnection($credentials);
+        $config = new AppConfig();
+        return (new React\MySQL\Factory())->createLazyConnection($config->credentials);
     },
     'X_LISTEN' => fn(string $PORT = '8000') => '0.0.0.0:' . $PORT,
 ]);

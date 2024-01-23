@@ -24,10 +24,6 @@ class CrudGetController
                 "User not found\n"
             )->withStatus(Response::STATUS_NOT_FOUND);
         }
-
-        $data = json_encode($query);
-        return Response::html(
-            $data
-        );
+        return Response::json($query);
     }
 }
