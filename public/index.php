@@ -24,4 +24,7 @@ $app->post('/crud/insert', Acme\Todo\Controllers\Crud\CrudInsertController::clas
 $app->post('/crud/datatable', Acme\Todo\Controllers\Crud\CrudDatatableController::class);
 $app->get('/crud/get/{id}', Acme\Todo\Controllers\Crud\CrudGetController::class);
 
+$app->get('/login', Acme\Todo\Controllers\LoginController::class);
+$app->post('/login_action', Acme\Todo\Controllers\LoginActionController::class);
+
 $app->run();
