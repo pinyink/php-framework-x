@@ -22,11 +22,12 @@ class LoginActionController
         if (empty($query[0])) {
             return Response::html('<h4>Username Not Found</h4>');
         }
-        if ($query[0]['user_password'] != null && !password_verify($data['password'], $query[0]['user_password'])) {
+        if ($query[0]['user_password'] == null) {
             return Response::html('<h4>Password Not Same</h4>');
-        } else {
-            return Response::json($query);
         }
-        // return Response::html('<h4>Ok</h4>');
+        if (!password_verify($data['password'], $query[0]['user_password'])) {
+            return Response::html('<h4>Password Not Same</h4>');
+        }
+        return Response::html('<h4>Ok</h4>');
     }
 }
